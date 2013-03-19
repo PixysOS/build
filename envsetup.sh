@@ -1620,4 +1620,6 @@ if [ -z ${CCACHE_EXEC} ]; then
     fi
 fi
 
+export ANDROID_BUILD_TOP=$(gettop)
+
 . $ANDROID_BUILD_TOP/vendor/pixys/build/envsetup.sh
