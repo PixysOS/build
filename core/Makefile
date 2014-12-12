@@ -3648,6 +3648,9 @@ else
   ifeq ($(TARGET_BUILD_PDK),true)
     build_ota_package := false
   endif
+  ifeq ($(TARGET_FORCE_OTA_PACKAGE),true)
+    build_ota_package := true
+  endif
 
   # set build_otatools_package, and allow opt-out below
   build_otatools_package := true
@@ -3973,7 +3976,7 @@ else
 endif
 	@# OTA install helpers
 	$(hide) $(call package_files-copy-root, \
-		$(PRODUCT_OUT)/install,$(zip_root)/INSTALL)
+	    $(PRODUCT_OUT)/install,$(zip_root)/INSTALL)
 ifdef INSTALLED_KERNEL_TARGET
 	$(hide) cp $(INSTALLED_KERNEL_TARGET) $(zip_root)/$(PRIVATE_RECOVERY_OUT)/kernel
 endif
