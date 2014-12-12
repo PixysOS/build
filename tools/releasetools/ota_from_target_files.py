@@ -249,7 +249,7 @@ METADATA_NAME = 'META-INF/com/android/metadata'
 POSTINSTALL_CONFIG = 'META/postinstall_config.txt'
 DYNAMIC_PARTITION_INFO = 'META/dynamic_partitions_info.txt'
 AB_PARTITIONS = 'META/ab_partitions.txt'
-UNZIP_PATTERN = ['IMAGES/*', 'META/*', 'RADIO/*', 'SYSTEM/build.prop']
+UNZIP_PATTERN = ['IMAGES/*', 'META/*', 'RADIO/*', 'INSTALL/*', 'SYSTEM/build.prop']
 RETROFIT_DAP_UNZIP_PATTERN = ['OTA/super_*.img', AB_PARTITIONS]
 
 # Images to be excluded from secondary payload. We essentially only keep
@@ -911,6 +911,15 @@ def GetBlockDifferences(target_zip, source_zip, target_info, source_info,
 
   return block_diff_dict
 
+def CopyInstallTools(output_zip):
+  install_path = os.path.join(OPTIONS.input_tmp, "INSTALL")
+  for root, subdirs, files in os.walk(install_path):
+     for f in files:
+      install_source = os.path.join(root, f)
+      install_target = os.path.join("install", os.path.relpath(root, install_path), f)
+      output_zip.write(install_source, install_target)
+
+
 def WriteFullOTAPackage(input_zip, output_file):
   target_info = BuildInfo(OPTIONS.info_dict, OPTIONS.oem_dicts)
 
@@ -1040,6 +1049,14 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   # All other partitions as well as the data wipe use 10% of the progress, and
   # the update of the system partition takes the remaining progress.
   system_progress = 0.9 - (len(block_diff_dict) - 1) * 0.1
+
+  CopyInstallTools(output_zip)
+  script.UnpackPackageDir("install", "/tmp/install")
+  script.SetPermissionsRecursive("/tmp/install", 0, 0, 0755, 0644, None, None)
+  script.SetPermissionsRecursive("/tmp/install/bin", 0, 0, 0755, 0755, None, None)
+
+  system_progress = 0.75
+
   if OPTIONS.wipe_user_data:
     system_progress -= 0.1
   progress_dict = {partition: 0.1 for partition in block_diff_dict}
