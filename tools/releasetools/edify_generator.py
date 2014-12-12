@@ -365,6 +365,11 @@ class EdifyGenerator(object):
       self.script.append('unmount("%s");' % (p,))
     self.mounts = set()
 
+  def UnpackPackageDir(self, src, dst):
+    """Unpack a given directory from the OTA package into the given
+    destination directory."""
+    self.script.append('package_extract_dir("%s", "%s");' % (src, dst))
+
   def AddToZip(self, input_zip, output_zip, input_path=None):
     """Write the accumulated script to the output_zip file.  input_zip
     is used as the source for the 'updater' binary needed to run
