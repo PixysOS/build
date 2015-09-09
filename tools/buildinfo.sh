@@ -54,7 +54,9 @@ echo "ro.build.description=$PRIVATE_BUILD_DESC"
 if [ -n "$BUILD_THUMBPRINT" ] ; then
   echo "ro.build.thumbprint=$BUILD_THUMBPRINT"
 fi
-
+if [ -n "$DEVICE_MAINTAINERS" ] ; then
+  echo "ro.pixys.maintainer=$DEVICE_MAINTAINERS"
+fi
 echo "ro.pixys.device=$PIXYS_DEVICE"
 
 echo "# end build properties"
