@@ -1,3 +1,4 @@
+bootl
 #!/bin/bash
 
 echo "# begin build properties"
@@ -59,5 +60,7 @@ if [ -n "$BUILD_THUMBPRINT" ] ; then
   echo "ro.build.thumbprint=$BUILD_THUMBPRINT"
 fi
 echo "ro.build.characteristics=$TARGET_AAPT_CHARACTERISTICS"
+
+echo "ro.pixys.device=$PIXYS_DEVICE"
 
 echo "# end build properties"
