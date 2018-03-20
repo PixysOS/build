@@ -171,6 +171,7 @@ include $(BUILD_SYSTEM)/device.mk
 # A PixysOS build needs only the Pixys product makefiles.
 ifneq ($(PIXYS_BUILD),)
   all_product_configs := $(shell find device -path "*/$(PIXYS_BUILD)/pixys_$(PIXYS_BUILD).mk")
+  all_product_configs += $(wildcard vendor/pixys/build/target/product/pixys_$(PIXYS_BUILD).mk)
 else
   ifneq ($(strip $(TARGET_BUILD_APPS)),)
   # An unbundled app build needs only the core product makefiles.
