@@ -297,6 +297,16 @@ ifeq ($(TARGET_BUILD_TYPE),debug)
   BUILD_VERSION_TAGS += debug
 endif
 BUILD_KEYS := release-keys
+# The "test-keys" tag marks builds signed with the old test keys,
+# which are available in the SDK.  "dev-keys" marks builds signed with
+# non-default dev keys (usually private keys from a vendor directory).
+# Both of these tags will be removed and replaced with "release-keys"
+# when the target-files is signed in a post-build step.
+ifeq ($(DEFAULT_SYSTEM_DEV_CERTIFICATE),build/make/target/product/security/testkey)
+BUILD_KEYS := test-keys
+else
+BUILD_KEYS := dev-keys
+endif
 BUILD_VERSION_TAGS += $(BUILD_KEYS)
 BUILD_VERSION_TAGS := $(subst $(space),$(comma),$(sort $(BUILD_VERSION_TAGS)))
 
@@ -3759,7 +3769,7 @@ $(BUILT_OTATOOLS_PACKAGE): zip_root := $(call intermediates-dir-for,PACKAGING,ot
 
 OTATOOLS_DEPS := \
   system/extras/ext4_utils/mke2fs.conf \
-  $(sort $(shell find build/target/product/security -type f -name "*.x509.pem" -o -name "*.pk8" -o \
+  $(sort $(shell find build/make/target/product/security -type f -name "*.x509.pem" -o -name "*.pk8" -o \
       -name verity_key))
 
 ifneq (,$(wildcard device))
