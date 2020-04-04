@@ -2286,19 +2286,19 @@ endef
 endif
 
 # Create symlink /system/product to /product if necessary.
-ifdef BOARD_USES_PRODUCTIMAGE
-define create-system-product-symlink
-$(hide) if [ -d $(TARGET_OUT)/product ] && [ ! -h $(TARGET_OUT)/product ]; then \
-  echo 'Non-symlink $(TARGET_OUT)/product detected!' 1>&2; \
-  echo 'You cannot install files to $(TARGET_OUT)/product while building a separate product.img!' 1>&2; \
-  exit 1; \
-fi
-$(hide) ln -sf /product $(TARGET_OUT)/product
-endef
-else
-define create-system-product-symlink
-endef
-endif
+#ifdef BOARD_USES_PRODUCTIMAGE
+#define create-system-product-symlink
+#$(hide) if [ -d $(TARGET_OUT)/product ] && [ ! -h $(TARGET_OUT)/product ]; then \
+#  echo 'Non-symlink $(TARGET_OUT)/product detected!' 1>&2; \
+#  echo 'You cannot install files to $(TARGET_OUT)/product while building a separate product.img!' 1>&2; \
+#  exit 1; \
+#fi
+#$(hide) ln -sf /product $(TARGET_OUT)/product
+#endef
+#else
+#define create-system-product-symlink
+#endef
+#endif
 
 # Create symlink /system/product_services to /product_services if necessary.
 ifdef BOARD_USES_PRODUCT_SERVICESIMAGE
