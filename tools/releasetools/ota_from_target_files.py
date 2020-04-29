@@ -822,6 +822,28 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   # Dump fingerprints
   script.Print("Target: {}".format(target_info.fingerprint))
 
+  pixys_version = target_info.GetBuildProp("ro.modversion")
+  android_version = target_info.GetBuildProp("ro.build.version.release")
+  build_id = target_info.GetBuildProp("ro.build.id")
+  security_patch = target_info.GetBuildProp("ro.build.version.security_patch")
+  device = target_info.GetBuildProp("ro.pixys.device")
+  edition = target_info.GetBuildProp("ro.pixys.edition")
+
+  script.Print("--------------------------------------------");
+  script.Print("  ___  ___  _   _ _    _  ____   ___   ___  ");
+  script.Print(" | _ \|_ _| \ \/ /\ \ / // __|  / _ \ / __| ");
+  script.Print(" |  _/ | |   >  <  \ V / \__ \ | (_) |\__ \ ");
+  script.Print(" |_|  |___| /_/\_\  |_|  |___/  \___/ |___/ ");
+  script.Print("                                            ");
+  script.Print("--------------------------------------------");
+  script.Print(" PixysOS version: PixysOS-%s"%(pixys_version));
+  script.Print(" Android version: %s"%(android_version));
+  script.Print(" Build id: %s"%(build_id));
+  script.Print(" Security patch: %s"%(security_patch));
+  script.Print(" Device: %s"%(device));
+  script.Print(" PixysOS Edition: %s"%(edition));
+  script.Print("--------------------------------------------");
+
   device_specific.FullOTA_InstallBegin()
 
   CopyInstallTools(output_zip)
