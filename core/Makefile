@@ -5402,9 +5402,6 @@ ifeq ($(TARGET_OTA_ASSERT_DEVICE),)
 else
     OTA_SCRIPT_OVERRIDE_DEVICE := $(TARGET_OTA_ASSERT_DEVICE)
 
-ifeq ($(PIXYS_EDITION),GAPPS)
-    $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := false
-else
 ifneq ($(PIXYS_BUILD),)
     $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := true
 else
