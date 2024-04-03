@@ -230,7 +230,7 @@ ifeq ($(TARGET_BUILD_VARIANT),user)
   endif
 else
   # Non-user builds should show detailed build information
-  BUILD_DISPLAY_ID := $(BUILD_ID)
+  BUILD_DISPLAY_ID := $(BUILD_ID)-$(TARGET_BUILD_VARIANT)
 endif
 
 # TARGET_BUILD_FLAVOR and ro.build.flavor are used only by the test
